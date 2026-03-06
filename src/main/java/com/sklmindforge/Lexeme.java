@@ -9,16 +9,23 @@ public class Lexeme {
     private static HuggingFaceTokenizer engine;
 
     static {
-        try (InputStream is = Lexeme.class.getClassLoader().getResourceAsStream("lexeme_v3_100k.json")) {
-            if (is == null) throw new RuntimeException("Lexeme JSON not found!");
+        // Updated to match your EXACT filename
+        String filename = "Lexeme_V3_Final_Watermarked.json";
+        
+        InputStream is = Lexeme.class.getResourceAsStream("/" + filename);
+        if (is == null) {
+            is = Lexeme.class.getClassLoader().getResourceAsStream(filename);
+        }
+
+        try {
+            if (is == null) {
+                throw new RuntimeException("CRITICAL: File " + filename + " not found in src/main/resources/");
+            }
             
-            // Convert InputStream to String because newInstance likes Strings/Paths
             String jsonContent;
             try (Scanner scanner = new Scanner(is, StandardCharsets.UTF_8.name())) {
                 jsonContent = scanner.useDelimiter("\\A").next();
             }
-            
-            // Use newInstance with the actual JSON string
             engine = HuggingFaceTokenizer.newInstance(jsonContent);
         } catch (Exception e) {
             throw new RuntimeException("Failed to load Lexeme Engine: " + e.getMessage());
