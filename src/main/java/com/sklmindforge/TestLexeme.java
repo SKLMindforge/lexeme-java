@@ -6,18 +6,14 @@ public class TestLexeme {
     public static void main(String[] args) {
         System.out.println("--- Lexeme V3 Java Test ---");
 
-        // Test 1: Static Encode
-        String text = "Hello.";
-        long[] encoded = Lexeme.encode(text);
-        System.out.println("Text: " + text);
-        System.out.println("Encoded IDs: " + Arrays.toString(encoded));
+        // Test Static Encode/Decode
+        long[] A = Lexeme.encode("Hello.");
+        System.out.println("Encoded: " + Arrays.toString(A));
+        System.out.println("Decoded: " + Lexeme.decode(A));
 
-        // Test 2: Static Decode
-        // (Using example IDs from your prompt)
-        long[] testIds = {10490, 255, 106, 225, 100316};
-        String decoded = Lexeme.decode(testIds);
-        System.out.println("Decoded Text: " + decoded);
-        
-        System.out.println("--- Test Complete ---");
+        // Test the Tokenizer Class (System.in wrapper)
+        // We'll just check if the class exists/loads
+        LexemeTokenizer tokenizer = new LexemeTokenizer(System.in);
+        System.out.println("LexemeTokenizer initialized successfully.");
     }
 }
